@@ -1,4 +1,4 @@
-# 🍕 Food-101 Classifier
+# Food-101 Classifier
 
 **Classification automatique de 101 catégories d'aliments par Deep Learning**
 
@@ -8,7 +8,7 @@
 
 ---
 
-## 📋 Description du Projet
+## Description du Projet
 
 Ce projet implémente un système de classification d'images alimentaires utilisant **ResNet-50 avec transfer learning** pour classifier 101 catégories d'aliments du dataset Food-101.
 
@@ -24,7 +24,7 @@ Ce projet implémente un système de classification d'images alimentaires utilis
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 **Modèle**: ResNet-50 pré-entraîné sur ImageNet
 - 50 couches avec connexions résiduelles
@@ -38,7 +38,7 @@ Ce projet implémente un système de classification d'images alimentaires utilis
 
 ---
 
-## 📂 Structure du Projet
+## Structure du Projet
 
 ```
 food101-classifier/
@@ -71,7 +71,7 @@ food101-classifier/
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ### Prérequis
 - Python 3.8+
@@ -98,7 +98,7 @@ pip install -r requirements.txt
 
 ---
 
-## 📥 Téléchargement du Dataset
+## Téléchargement du Dataset
 
 ### Option 1: Script automatique (Recommandé)
 ```bash
@@ -128,7 +128,7 @@ data/food-101/
 
 ---
 
-## 🎯 Utilisation
+## Utilisation
 
 ### 1. Exploration des données
 ```bash
@@ -175,7 +175,7 @@ Ouvrir http://localhost:8501 dans votre navigateur.
 
 ---
 
-## 📊 Résultats
+## Resultats
 
 ### Métriques de Performance
 
@@ -203,7 +203,7 @@ Ouvrir http://localhost:8501 dans votre navigateur.
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### Fichier `src/training/config.py`
 ```python
@@ -226,7 +226,7 @@ STD = [0.229, 0.224, 0.225]
 
 ---
 
-## 🎓 Contexte Académique
+## Contexte Academique
 
 **Étudiant**: Mouhamed Diop
 **Filière**: DIC2-GIT
@@ -238,7 +238,7 @@ STD = [0.229, 0.224, 0.225]
 
 ---
 
-## 📚 Références
+## References
 
 ### Article Original
 - [Food-101 Paper](https://data.vision.ee.ethz.ch/cvl/datasets_extra/food-101/)
@@ -255,7 +255,7 @@ STD = [0.229, 0.224, 0.225]
 
 ---
 
-## 📝 TODO
+## TODO
 
 - [x] Créer structure du projet
 - [x] Créer requirements.txt
@@ -272,24 +272,14 @@ STD = [0.229, 0.224, 0.225]
 
 ---
 
-## 🤝 Contribution
+## Contribution
 
 Ce projet est développé dans le cadre d'un projet académique.
 
 ---
 
-## 📄 License
+## License
 
 MIT License - Voir [LICENSE](LICENSE) pour plus de détails.
 
----
-
-## 📧 Contact
-
-**Mouhamed Diop**
-Email: [votre-email@exemple.com]
-GitHub: [@votre-username](https://github.com/votre-username)
-
----
-
-**Dernière mise à jour**: Octobre 2025
+----

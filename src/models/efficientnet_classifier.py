@@ -90,16 +90,16 @@ class EfficientNetClassifier(nn.Module):
         return logits
 
     def freeze_backbone(self):
-        """Gèle le backbone (pour Phase 1)"""
+        """Gele le backbone (pour Phase 1)"""
         for param in self.backbone.parameters():
             param.requires_grad = False
-        print("🔒 Backbone EfficientNet-B4 gelé (Phase 1)")
+        print("Backbone EfficientNet-B4 gele (Phase 1)")
 
     def unfreeze_backbone(self):
-        """Dégèle le backbone (pour Phase 2)"""
+        """Degele le backbone (pour Phase 2)"""
         for param in self.backbone.parameters():
             param.requires_grad = True
-        print("🔓 Backbone EfficientNet-B4 dégelé (Phase 2)")
+        print("Backbone EfficientNet-B4 degele (Phase 2)")
 
     def get_num_params(self):
         """Retourne le nombre de paramètres du modèle"""
@@ -169,7 +169,7 @@ def load_checkpoint(model, checkpoint_path, device='cuda'):
     # Charger les poids
     model.load_state_dict(checkpoint['model_state_dict'])
 
-    print(f"✅ Checkpoint chargé: {checkpoint_path}")
+    print(f"Checkpoint charge: {checkpoint_path}")
     if 'epoch' in checkpoint:
         print(f"   Epoch: {checkpoint['epoch']}")
     if 'best_acc' in checkpoint:
@@ -216,4 +216,4 @@ if __name__ == "__main__":
     total, trainable = model.get_num_params()
     print(f"  Trainable params (Phase 2): {trainable:,} ({trainable/1e6:.1f}M)")
 
-    print("\n✅ Test réussi!")
+    print("\nTest reussi!")

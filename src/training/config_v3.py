@@ -4,7 +4,7 @@ Objectif: 85-90% Top-1 Accuracy (ATTEINDRE L'OBJECTIF!)
 Durée estimée: ~35-40h sur T4 GPU
 
 CHANGEMENTS MAJEURS vs V2:
-1. Architecture: ResNet-50 → EfficientNet-B4 (SOTA pour Food-101)
+1. Architecture: ResNet-50 -> EfficientNet-B4 (SOTA pour Food-101)
 2. Augmentation modérée (medium) avec TTA en évaluation
 3. Training plus long: 120 epochs Phase 2
 4. MixUp/CutMix optimisés (alpha réduits, prob 25%)
@@ -12,8 +12,8 @@ CHANGEMENTS MAJEURS vs V2:
 6. Warmup progressif (10 epochs)
 
 GAINS ATTENDUS:
-- Top-1 Accuracy: 66% → 85-90% (+19 à +24 points) ✅ OBJECTIF ATTEINT
-- Top-5 Accuracy: 89% → 97-99% (+8 à +10 points)
+- Top-1 Accuracy: 66% -> 85-90% (+19 a +24 points) OBJECTIF ATTEINT
+- Top-5 Accuracy: 89% -> 97-99% (+8 a +10 points)
 
 ARCHITECTURE EFFICIENTNET-B4:
 - Paramètres: 19M (vs 25.6M ResNet-50)
@@ -37,15 +37,15 @@ class ConfigV3:
     CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
-    # ============ Modèle ============
-    MODEL_NAME = 'efficientnet_b4'  # 🆕 NOUVEAU: Architecture SOTA
+    # ============ Modele ============
+    MODEL_NAME = 'efficientnet_b4'  # NOUVEAU: Architecture SOTA
     NUM_CLASSES = 101
     PRETRAINED = True
-    DROPOUT = 0.3  # ✅ Augmenté pour EfficientNet (plus de paramètres effectifs)
+    DROPOUT = 0.3  # Augmente pour EfficientNet (plus de parametres effectifs)
 
-    # ============ Données ============
-    IMG_SIZE = 380  # 🆕 OPTIMISÉ: EfficientNet-B4 utilise 380x380 (vs 224 ResNet)
-    BATCH_SIZE = 16  # ✅ Réduit car images plus grandes (380 vs 224)
+    # ============ Donnees ============
+    IMG_SIZE = 380  # OPTIMISE: EfficientNet-B4 utilise 380x380 (vs 224 ResNet)
+    BATCH_SIZE = 16  # Reduit car images plus grandes (380 vs 224)
     NUM_WORKERS = 4
     PIN_MEMORY = True
 
@@ -53,47 +53,47 @@ class ConfigV3:
     IMAGENET_MEAN = [0.485, 0.456, 0.406]
     IMAGENET_STD = [0.229, 0.224, 0.225]
 
-    # Data augmentation - MEDIUM (équilibré)
-    AUGMENTATION_LEVEL = 'medium'  # ✅ Ni trop agressif, ni trop faible
+    # Data augmentation - MEDIUM (equilibre)
+    AUGMENTATION_LEVEL = 'medium'  # Ni trop agressif, ni trop faible
 
-    # ============ Entraînement Phase 1 ============
+    # ============ Entrainement Phase 1 ============
     PHASE1_EPOCHS = 5
     PHASE1_LR = 1e-3
     PHASE1_OPTIMIZER = 'adam'
     PHASE1_WEIGHT_DECAY = 1e-4
 
-    # ============ Entraînement Phase 2 ============
-    PHASE2_EPOCHS = 120  # 🆕 OPTIMISÉ: Training long pour convergence complète
-    PHASE2_LR = 3e-5  # ✅ OPTIMISÉ: Plus faible pour EfficientNet (fine-tuning délicat)
-    PHASE2_OPTIMIZER = 'adamw'  # 🆕 NOUVEAU: AdamW (meilleur que SGD pour EfficientNet)
-    PHASE2_MOMENTUM = 0.9  # Non utilisé avec AdamW
-    PHASE2_WEIGHT_DECAY = 1e-5  # ✅ Réduit pour AdamW
+    # ============ Entrainement Phase 2 ============
+    PHASE2_EPOCHS = 120  # OPTIMISE: Training long pour convergence complete
+    PHASE2_LR = 3e-5  # OPTIMISE: Plus faible pour EfficientNet (fine-tuning delicat)
+    PHASE2_OPTIMIZER = 'adamw'  # NOUVEAU: AdamW (meilleur que SGD pour EfficientNet)
+    PHASE2_MOMENTUM = 0.9  # Non utilise avec AdamW
+    PHASE2_WEIGHT_DECAY = 1e-5  # Reduit pour AdamW
 
     # ============ Scheduler ============
     USE_SCHEDULER = True
     SCHEDULER_TYPE = 'cosine'
     STEP_SIZE = 3
     GAMMA = 0.1
-    T_MAX = 120  # ✅ Aligné avec PHASE2_EPOCHS
-    WARMUP_EPOCHS = 10  # 🆕 OPTIMISÉ: Warmup plus long pour stabilité
+    T_MAX = 120  # Aligne avec PHASE2_EPOCHS
+    WARMUP_EPOCHS = 10  # OPTIMISE: Warmup plus long pour stabilite
 
     # ============ Training ============
     USE_AMP = True
     GRADIENT_CLIP = 1.0
 
-    # Advanced augmentation - OPTIMISÉ
+    # Advanced augmentation - OPTIMISE
     USE_MIXUP = True
-    MIXUP_ALPHA = 0.15  # ✅ OPTIMISÉ: Réduit de 0.2 → 0.15
+    MIXUP_ALPHA = 0.15  # OPTIMISE: Reduit de 0.2 -> 0.15
     USE_CUTMIX = True
-    CUTMIX_ALPHA = 0.25  # ✅ OPTIMISÉ: Réduit de 1.0 → 0.25
-    MIXUP_PROB = 0.25  # ✅ OPTIMISÉ: Seulement 25% des batches (75% normaux)
+    CUTMIX_ALPHA = 0.25  # OPTIMISE: Reduit de 1.0 -> 0.25
+    MIXUP_PROB = 0.25  # OPTIMISE: Seulement 25% des batches (75% normaux)
 
     # Test-Time Augmentation
-    USE_TTA = True  # 🆕 NOUVEAU: TTA pour améliorer validation (+1-2%)
+    USE_TTA = True  # NOUVEAU: TTA pour ameliorer validation (+1-2%)
     TTA_TRANSFORMS = 5  # Nombre de transformations pour TTA
 
     # Early stopping
-    EARLY_STOPPING_PATIENCE = 20  # ✅ OPTIMISÉ: Plus de patience (120 epochs)
+    EARLY_STOPPING_PATIENCE = 20  # OPTIMISE: Plus de patience (120 epochs)
     EARLY_STOPPING_DELTA = 0.001
 
     # Label Smoothing
@@ -101,9 +101,9 @@ class ConfigV3:
 
     # Sauvegarde
     SAVE_BEST_ONLY = True
-    SAVE_EVERY_N_EPOCHS = 10  # ✅ Moins fréquent (epochs plus longs)
+    SAVE_EVERY_N_EPOCHS = 10  # Moins frequent (epochs plus longs)
 
-    # ============ Évaluation ============
+    # ============ Evaluation ============
     EVAL_EVERY_N_EPOCHS = 1
     TOPK = (1, 5)
 
@@ -128,58 +128,58 @@ class ConfigV3:
     def print_config(cls):
         """Affiche la configuration"""
         print("\n" + "="*80)
-        print("🚀 CONFIGURATION V3 - ARCHITECTURE EFFICIENTNET-B4")
+        print("CONFIGURATION V3 - ARCHITECTURE EFFICIENTNET-B4")
         print("="*80)
 
-        print("\n📁 CHEMINS:")
+        print("\nCHEMINS:")
         print(f"  - Data dir: {cls.DATA_DIR}")
         print(f"  - Checkpoint dir: {cls.CHECKPOINT_DIR}")
         print(f"  - Results dir: {cls.RESULTS_DIR}")
 
-        print("\n🧠 MODÈLE:")
-        print(f"  - Architecture: {cls.MODEL_NAME.upper()} 🆕 (NOUVEAU!)")
-        print(f"  - Paramètres: ~19M (vs 25.6M ResNet-50)")
+        print("\nMODELE:")
+        print(f"  - Architecture: {cls.MODEL_NAME.upper()} (NOUVEAU!)")
+        print(f"  - Parametres: ~19M (vs 25.6M ResNet-50)")
         print(f"  - Classes: {cls.NUM_CLASSES}")
         print(f"  - Pretrained: {cls.PRETRAINED}")
         print(f"  - Dropout: {cls.DROPOUT}")
 
-        print("\n📊 DONNÉES:")
-        print(f"  - Image size: {cls.IMG_SIZE}x{cls.IMG_SIZE} ⬆️ (OPTIMISÉ: 224→380 pour EfficientNet)")
-        print(f"  - Batch size: {cls.BATCH_SIZE} ⬇️ (réduit car images plus grandes)")
+        print("\nDONNEES:")
+        print(f"  - Image size: {cls.IMG_SIZE}x{cls.IMG_SIZE} (OPTIMISE: 224->380 pour EfficientNet)")
+        print(f"  - Batch size: {cls.BATCH_SIZE} (reduit car images plus grandes)")
         print(f"  - Num workers: {cls.NUM_WORKERS}")
         print(f"  - Augmentation: {cls.AUGMENTATION_LEVEL.upper()}")
 
-        print("\n🏋️ ENTRAÎNEMENT:")
+        print("\nENTRAINEMENT:")
         print(f"  - Phase 1: {cls.PHASE1_EPOCHS} epochs @ LR={cls.PHASE1_LR}")
         print(f"  - Phase 2: {cls.PHASE2_EPOCHS} epochs @ LR={cls.PHASE2_LR} (AdamW)")
-        print(f"  - Total epochs: {cls.get_total_epochs()} (85→125)")
+        print(f"  - Total epochs: {cls.get_total_epochs()} (85->125)")
         print(f"  - Optimizer Phase 1: {cls.PHASE1_OPTIMIZER.upper()}")
-        print(f"  - Optimizer Phase 2: {cls.PHASE2_OPTIMIZER.upper()} 🆕")
+        print(f"  - Optimizer Phase 2: {cls.PHASE2_OPTIMIZER.upper()} (NOUVEAU)")
 
-        print("\n⚡ OPTIMISATIONS V3:")
+        print("\nOPTIMISATIONS V3:")
         print(f"  - Mixed Precision (AMP): {cls.USE_AMP}")
         print(f"  - Gradient Clipping: {cls.GRADIENT_CLIP}")
         print(f"  - Scheduler: {cls.SCHEDULER_TYPE.upper()} (T_max={cls.T_MAX})")
-        print(f"  - Warmup: {cls.WARMUP_EPOCHS} epochs ⬆️ (OPTIMISÉ)")
+        print(f"  - Warmup: {cls.WARMUP_EPOCHS} epochs (OPTIMISE)")
         print(f"  - Label Smoothing: {cls.LABEL_SMOOTHING}")
         print(f"  - MixUp: {cls.USE_MIXUP} (alpha={cls.MIXUP_ALPHA})")
         print(f"  - CutMix: {cls.USE_CUTMIX} (alpha={cls.CUTMIX_ALPHA})")
         print(f"  - MixUp/CutMix prob: {cls.MIXUP_PROB*100}% (25% seulement)")
-        print(f"  - Test-Time Augmentation: {cls.USE_TTA} 🆕 (NOUVEAU!)")
+        print(f"  - Test-Time Augmentation: {cls.USE_TTA} (NOUVEAU!)")
 
-        print("\n💾 SAUVEGARDE:")
+        print("\nSAUVEGARDE:")
         print(f"  - Save best only: {cls.SAVE_BEST_ONLY}")
         print(f"  - Early stopping patience: {cls.EARLY_STOPPING_PATIENCE} epochs")
         print(f"  - Save every N epochs: {cls.SAVE_EVERY_N_EPOCHS}")
 
-        print("\n🖥️ DEVICE:")
+        print("\nDEVICE:")
         print(f"  - Device: {cls.DEVICE}")
 
         print("\n" + "="*80)
-        print("⏱️ DURÉE ESTIMÉE: 35-40 heures sur T4 GPU")
-        print("🎯 OBJECTIF: Top-1 Accuracy = 85-90% ✅ OBJECTIF ATTEINT!")
-        print("📈 AMÉLIORATION vs V2: +19 à +24% (66% → 85-90%)")
-        print("🏆 SOTA Food-101: ~92% (avec ensembles)")
+        print("DUREE ESTIMEE: 35-40 heures sur T4 GPU")
+        print("OBJECTIF: Top-1 Accuracy = 85-90% OBJECTIF ATTEINT!")
+        print("AMELIORATION vs V2: +19 a +24% (66% -> 85-90%)")
+        print("SOTA Food-101: ~92% (avec ensembles)")
         print("="*80)
 
     @classmethod
@@ -198,14 +198,14 @@ class ConfigV3:
             ("CUTMIX_ALPHA", "1.0", "0.25", "Beaucoup moins agressif"),
             ("MIXUP_PROB", "0.5 (50%)", "0.25 (25%)", "75% images normales"),
             ("USE_TTA", "False", "True", "Test-Time Augmentation"),
-            ("T_MAX", "80", "120", "Scheduler aligné"),
+            ("T_MAX", "80", "120", "Scheduler aligne"),
             ("EARLY_STOPPING", "12", "20", "Plus de patience"),
         ]
 
         print("\n" + "="*80)
-        print("📊 RÉSUMÉ DES CHANGEMENTS V2 → V3")
+        print("RESUME DES CHANGEMENTS V2 -> V3")
         print("="*80)
-        print(f"\n{'Paramètre':<25} {'V2':<20} {'V3':<20} {'Justification':<25}")
+        print(f"\n{'Parametre':<25} {'V2':<20} {'V3':<20} {'Justification':<25}")
         print("-"*80)
         for param, v2, v3, justif in changes:
             print(f"{param:<25} {v2:<20} {v3:<20} {justif:<25}")
@@ -213,13 +213,13 @@ class ConfigV3:
 
     @classmethod
     def get_requirements(cls):
-        """Retourne les dépendances supplémentaires pour V3"""
+        """Retourne les dependances supplementaires pour V3"""
         print("\n" + "="*80)
-        print("📦 DÉPENDANCES SUPPLÉMENTAIRES POUR V3")
+        print("DEPENDANCES SUPPLEMENTAIRES POUR V3")
         print("="*80)
         print("\nAjoutez à requirements.txt:")
         print("  efficientnet-pytorch>=0.7.1")
-        print("  ou utilisez timm (déjà installé):")
+        print("  ou utilisez timm (deja installe):")
         print("  timm>=0.9.0  # Contient EfficientNet-B4 pré-entraîné")
         print("\nInstallation:")
         print("  pip install timm>=0.9.0")

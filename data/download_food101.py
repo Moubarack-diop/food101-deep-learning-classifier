@@ -61,7 +61,7 @@ def download_food101(data_dir=".", extract=True, remove_archive=False):
             print(f" Erreur lors du téléchargement: {e}")
             sys.exit(1)
     else:
-        print(f"✓ Archive déjà téléchargée: {archive_path}")
+        print(f"Archive deja telechargee: {archive_path}")
 
     # Extraction
     if extract:
@@ -73,12 +73,12 @@ def download_food101(data_dir=".", extract=True, remove_archive=False):
                 for member in tqdm(members, desc="Extraction"):
                     tar.extract(member, path=data_dir)
 
-            print(f"✓ Extraction terminée: {extracted_path}")
+            print(f"Extraction terminee: {extracted_path}")
 
-            # Suppression de l'archive si demandé
+            # Suppression de l'archive si demande
             if remove_archive:
                 archive_path.unlink()
-                print(f"✓ Archive supprimée")
+                print(f"Archive supprimee")
 
         except Exception as e:
             print(f" Erreur lors de l'extraction: {e}")
@@ -108,10 +108,10 @@ def download_food101(data_dir=".", extract=True, remove_archive=False):
     else:
         num_test = "N/A"
 
-    print(f"✓ Nombre de classes: {num_classes}")
-    print(f"✓ Images d'entraînement: {num_train}")
-    print(f"✓ Images de test: {num_test}")
-    print(f"\n Dataset Food-101 prêt à l'emploi!")
+    print(f"Nombre de classes: {num_classes}")
+    print(f"Images d'entrainement: {num_train}")
+    print(f"Images de test: {num_test}")
+    print(f"\nDataset Food-101 pret a l'emploi!")
 
     return str(extracted_path)
 
@@ -139,7 +139,7 @@ def verify_dataset(data_dir):
     print(" Vérification du dataset:")
     all_ok = True
     for check_name, result in checks.items():
-        status = "✓" if result else "❌"
+        status = "OK" if result else "ERREUR"
         print(f"  {status} {check_name}")
         if not result:
             all_ok = False

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food-101 Classifier - Démo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <h1>Food-101 Classifier</h1>
+            </div>
+            <p class="subtitle">Classification d'images alimentaires avec Deep Learning</p>
+        </header>
+
+        <!-- Messages Flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Info Cards -->
+            <div class="info-cards">
+                <div class="info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>ResNet-50</h3>
+                    <p>Architecture de pointe avec Transfer Learning</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>101 Classes</h3>
+                    <p>101,000 images du dataset Food-101</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>85-90% Précision</h3>
+                    <p>Performance de classification optimale</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>&lt;100ms</h3>
+                    <p>Inférence en temps réel</p>
+                </div>
+            </div>
+
+            <!-- Galerie d'exemples de démonstration -->
+            <div class="examples-section">
+                <h3><i class="fas fa-images"></i> Exemples - Cliquez pour tester</h3>
+                <p class="demo-description">Cliquez sur une image ci-dessous pour voir les prédictions</p>
+                <div class="demo-gallery">
+                    {% for example in demo_examples %}
+                    <a href="{{ url_for('demo', demo_id=example.id) }}" class="demo-card">
+                        <div class="demo-image">
+                            <img src="{{ example.url }}" alt="{{ example.name }}" loading="lazy">
+                            <div class="demo-overlay">
+                                <i class="fas fa-search-plus"></i>
+                                <span>Analyser</span>
+                            </div>
+                        </div>
+                        <div class="demo-title">{{ example.name }}</div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <i class="fas fa-graduation-cap"></i>
+                Projet Deep Learning - Mouhamed Diop (DIC2-GIT, 2025)
+            </p>
+            <p class="tech-stack">
+                <span><i class="fab fa-python"></i> PyTorch</span>
+                <span><i class="fas fa-server"></i> Flask</span>
+                <span><i class="fas fa-brain"></i> ResNet-50</span>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

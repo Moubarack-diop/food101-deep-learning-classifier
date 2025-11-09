@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - Food-101 Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <h1>Food-101 Classifier</h1>
+            </div>
+            <p class="subtitle">À propos du projet</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="about-content">
+            <!-- Project Info -->
+            <div class="about-section">
+                <h2><i class="fas fa-info-circle"></i> Informations du projet</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <strong>Titre</strong>
+                        <p>{{ info.title }}</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>Auteur</strong>
+                        <p>{{ info.author }}</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>Année</strong>
+                        <p>{{ info.year }}</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>Nombre de classes</strong>
+                        <p>{{ info.classes }} types d'aliments</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>Précision cible</strong>
+                        <p>{{ info.accuracy_target }}</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>Modèle</strong>
+                        <p>{{ info.model }}</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>Dataset</strong>
+                        <p>{{ info.dataset }}</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>Framework</strong>
+                        <p>{{ info.framework }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="about-section">
+                <h2><i class="fas fa-star"></i> Caractéristiques techniques</h2>
+                <ul class="features-list">
+                    {% for feature in info.features %}
+                    <li><i class="fas fa-check-circle"></i> {{ feature }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Architecture -->
+            <div class="about-section">
+                <h2><i class="fas fa-project-diagram"></i> Architecture du modèle</h2>
+                <div class="architecture-info">
+                    <div class="arch-card">
+                        <h3>Phase 1: Head Training</h3>
+                        <ul>
+                            <li>Durée: 5 epochs</li>
+                            <li>Backbone gelé</li>
+                            <li>Optimiseur: Adam (LR=1e-3)</li>
+                        </ul>
+                    </div>
+                    <div class="arch-card">
+                        <h3>Phase 2: Fine-tuning</h3>
+                        <ul>
+                            <li>Durée: 80 epochs</li>
+                            <li>Réseau complet</li>
+                            <li>Optimiseur: SGD + Momentum</li>
+                            <li>Scheduler: Cosine Annealing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dataset Info -->
+            <div class="about-section">
+                <h2><i class="fas fa-database"></i> Dataset Food-101</h2>
+                <p>
+                    Le dataset Food-101 contient 101,000 images réparties en 101 catégories d'aliments.
+                    Chaque classe contient 750 images d'entraînement et 250 images de test.
+                </p>
+                <div class="dataset-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">101,000</div>
+                        <div class="stat-label">Images totales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">101</div>
+                        <div class="stat-label">Classes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">75,750</div>
+                        <div class="stat-label">Images d'entraînement</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">25,250</div>
+                        <div class="stat-label">Images de test</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions-section">
+                <a href="{{ url_for('index') }}" class="action-btn primary">
+                    <i class="fas fa-home"></i>
+                    Retour à l'accueil
+                </a>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <i class="fas fa-graduation-cap"></i>
+                Projet Deep Learning - Mouhamed Diop (DIC2-GIT, 2025)
+            </p>
+            <p class="tech-stack">
+                <span><i class="fab fa-python"></i> PyTorch</span>
+                <span><i class="fas fa-server"></i> Flask</span>
+                <span><i class="fas fa-brain"></i> ResNet-50</span>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

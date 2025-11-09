@@ -56,7 +56,7 @@ def main():
     # Choisir la config
     if args.debug:
         config = DebugConfig
-        print("🔧 Mode DEBUG activé")
+        print("Mode DEBUG active")
     else:
         config = Config
 
@@ -80,7 +80,7 @@ def main():
     # Lancer l'entraînement
     history = trainer.train()
 
-    print("\n Entraînement terminé!")
+    print("\nEntrainement termine!")
     print(f"Meilleure accuracy: {trainer.best_acc:.2f}%")
 
 

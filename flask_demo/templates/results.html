@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats - Food-101 Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <h1>Food-101 Classifier</h1>
+            </div>
+            <p class="subtitle">Résultats de l'analyse</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="results-content">
+            <!-- Image analysée -->
+            <div class="analyzed-image">
+                <h2><i class="fas fa-image"></i> Image analysée</h2>
+                <div class="image-container">
+                    {% if is_demo %}
+                        <img src="{{ image_path }}" alt="Image analysée">
+                    {% else %}
+                        <img src="{{ url_for('static', filename=image_path.replace('static/', '')) }}" alt="Image analysée">
+                    {% endif %}
+                </div>
+                <div class="inference-info">
+                    <i class="fas fa-clock"></i>
+                    <span>Temps d'inférence: <strong>{{ "%.2f"|format(inference_time) }} ms</strong></span>
+                </div>
+            </div>
+
+            <!-- Prédictions -->
+            <div class="predictions-section">
+                <h2><i class="fas fa-chart-bar"></i> Top 5 Prédictions</h2>
+
+                <div class="predictions-list">
+                    {% for pred in predictions %}
+                    <div class="prediction-item {% if loop.index == 1 %}top-prediction{% endif %}">
+                        <div class="prediction-header">
+                            <div class="rank-badge {% if loop.index == 1 %}rank-1{% elif loop.index == 2 %}rank-2{% elif loop.index == 3 %}rank-3{% endif %}">
+                                #{{ loop.index }}
+                            </div>
+                            <div class="prediction-info">
+                                <h3>{{ pred.name }}</h3>
+                                <p class="class-name">{{ pred.class }}</p>
+                            </div>
+                            <div class="probability-badge">
+                                {{ "%.2f"|format(pred.probability) }}%
+                            </div>
+                        </div>
+
+                        <div class="probability-bar-container">
+                            <div class="probability-bar" style="width: {{ pred.probability }}%">
+                                <span class="bar-label">{{ "%.2f"|format(pred.probability) }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Résumé -->
+                <div class="prediction-summary">
+                    <div class="summary-item">
+                        <i class="fas fa-trophy"></i>
+                        <div>
+                            <strong>Meilleure prédiction</strong>
+                            <p>{{ predictions[0].name }} ({{ "%.2f"|format(predictions[0].probability) }}%)</p>
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <i class="fas fa-brain"></i>
+                        <div>
+                            <strong>Modèle utilisé</strong>
+                            <p>ResNet-50 avec Transfer Learning</p>
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <i class="fas fa-database"></i>
+                        <div>
+                            <strong>Dataset</strong>
+                            <p>Food-101 (101 classes)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions-section">
+                <a href="{{ url_for('index') }}" class="action-btn primary">
+                    <i class="fas fa-upload"></i>
+                    Analyser une autre image
+                </a>
+                <a href="{{ url_for('about') }}" class="action-btn secondary">
+                    <i class="fas fa-info-circle"></i>
+                    À propos du projet
+                </a>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <i class="fas fa-graduation-cap"></i>
+                Projet Deep Learning - Mouhamed Diop (DIC2-GIT, 2025)
+            </p>
+            <p class="tech-stack">
+                <span><i class="fab fa-python"></i> PyTorch</span>
+                <span><i class="fas fa-server"></i> Flask</span>
+                <span><i class="fas fa-brain"></i> ResNet-50</span>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Animation d'apparition des prédictions
+        document.addEventListener('DOMContentLoaded', function() {
+            const predictions = document.querySelectorAll('.prediction-item');
+            predictions.forEach((pred, index) => {
+                setTimeout(() => {
+                    pred.style.opacity = '0';
+                    pred.style.transform = 'translateY(20px)';
+                    pred.style.transition = 'all 0.5s ease';
+
+                    setTimeout(() => {
+                        pred.style.opacity = '1';
+                        pred.style.transform = 'translateY(0)';
+                    }, 50);
+                }, index * 100);
+            });
+
+            // Animation des barres de progression
+            const bars = document.querySelectorAll('.probability-bar');
+            bars.forEach((bar, index) => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.transition = 'width 1s ease';
+                    bar.style.width = width;
+                }, 300 + index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
