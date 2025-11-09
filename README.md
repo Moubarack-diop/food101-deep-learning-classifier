@@ -255,21 +255,6 @@ STD = [0.229, 0.224, 0.225]
 
 ---
 
-## TODO
-
-- [x] Créer structure du projet
-- [x] Créer requirements.txt
-- [ ] Télécharger dataset Food-101
-- [ ] Implémenter data loaders
-- [ ] Construire modèle ResNet-50
-- [ ] Entraîner Phase 1 (3 epochs)
-- [ ] Entraîner Phase 2 (10 epochs)
-- [ ] Évaluer sur test set
-- [ ] Créer visualisations (GradCAM)
-- [ ] Développer application Streamlit
-- [ ] Déployer sur Hugging Face Spaces
-- [ ] Rédiger rapport final (15-25 pages)
-
 ---
 
 ## Contribution
